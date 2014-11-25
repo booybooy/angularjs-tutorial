@@ -10,10 +10,9 @@ angular.module('angularjsTutorial')
       todo.dueDate = new Date();
       self.todos.push(todo);
     };
-    self.removeTodo = function(title) {
-      self.todos = self.todos.filter(function (item) {
-        return item.title !== title;
-      });
+    self.removeTodo = function(todo) {
+      var index = self.todos.indexOf(todo);
+      self.todos.splice(index, 1);
     };
     self.getCompletedStyle = function(completed) {
       return completed ? "text-success" : "text-danger";
@@ -36,9 +35,9 @@ angular.module('angularjsTutorial')
         self.tableParams.reload();
       }, true);
 
-    $scope.$watch(function() { return self.newTodoTitle; },
-      function(newVal, oldVal){
-        console.log("new value: " + newVal + ", old value: " + oldVal);
-        console.log("New todo: " + self.newTodoTitle);
-      });
+    //$scope.$watch(function() { return self.newTodoTitle; },
+    //  function(newVal, oldVal){
+    //    console.log("new value: " + newVal + ", old value: " + oldVal);
+    //    console.log("New todo: " + self.newTodoTitle);
+    //  });
   });

@@ -1,10 +1,11 @@
+@import "compass/css3";
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
 }
-
 .thumbnail {
   height: 200px;
 
@@ -13,6 +14,63 @@
   }
 }
 
+$item-height: 25px;
+
+// SCSS file
+.fade-height-animation {
+  &.ng-enter {
+    @include animation(wobble .5s);
+  }
+  &.ng-leave {
+    @include animation(zoomOut .5s);
+  }
+}
+
+.slide-animation {
+  @include transition(1s ease all);
+
+  &.ng-enter {
+    opacity : 0;
+    max-height: $item-height;
+    padding: 0;
+
+    &.ng-enter-active {
+      opacity : 1;
+      max-height: $item-height;
+      padding: 5px;
+    }
+  }
+
+  &.ng-leave {
+    opacity : 1;
+    max-height: $item-height;
+    padding: 5px;
+
+    &.ng-leave-active {
+      opacity : 0;
+      max-height: 0;
+      padding: 0;
+    }
+  }
+}
+
+.todo {
+
+  .todo-item {
+
+
+    &.completed {
+      td {
+        text-decoration: line-through;
+      }
+    }
+
+
+    td {
+      @include transition(1s ease all);
+    }
+  }
+}
 .topmargin {
   margin-top: 15px;
 }
