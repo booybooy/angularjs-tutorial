@@ -6,11 +6,15 @@ module.exports = function(config) {
     basePath : '..', //!\\ Ignored through gulp-karma //!\\
 
     files : [ //!\\ Ignored through gulp-karma //!\\
-        'src/bower_components/angular/angular.js',
-        'src/bower_components/angular/angular-route.js',
-        'src/bower_components/angular-mocks/angular-mocks.js',
-        'src/{app,components}/** /*.js',
-        'test/unit/** /*.js'
+        'bower_components/angular/angular.js',
+        'bower_components/angular-ui-router/release/angular-ui-router.js',
+      //  'bower_components/angular-mocks/angular-mocks.js',
+      //  'bower_components/angular-animate/angular-animate.js',
+      //'bower_components/angular-cookies/angular-cookies.js',
+        'bower_components/angular-*/angular*.js',
+        'bower_components/moment/moment.js',
+        'src/**/*.js',
+        'test/unit/**/*.js'
     ],
 
     autoWatch : false,

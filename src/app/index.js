@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularjsTutorial', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router'])
+var app = angular.module('angularjsTutorial', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ngTable'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -11,5 +11,8 @@ angular.module('angularjsTutorial', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
       });
 
     $urlRouterProvider.otherwise('/');
-  })
-;
+  });
+
+app.controller('GlobalController', function($scope) {
+  this.message = "I am GloballController";
+});

@@ -1,73 +1,44 @@
 'use strict';
 
 angular.module('angularjsTutorial')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      {
-        'key': 'angular',
-        'title': 'AngularJS',
-        'url': 'https://angularjs.org/',
-        'description': 'HTML enhanced for web apps!',
-        'logo': 'angular.png'
-      },
-      {
-        'key': 'browsersync',
-        'title': 'BrowserSync',
-        'url': 'http://browsersync.io/',
-        'description': 'Time-saving synchronised browser testing.',
-        'logo': 'browsersync.png'
-      },
-      {
-        'key': 'gulp',
-        'title': 'GulpJS',
-        'url': 'http://gulpjs.com/',
-        'description': 'The streaming build system.',
-        'logo': 'gulp.png'
-      },
-      {
-        'key': 'jasmine',
-        'title': 'Jasmine',
-        'url': 'http://jasmine.github.io/',
-        'description': 'Behavior-Driven JavaScript.',
-        'logo': 'jasmine.png'
-      },
-      {
-        'key': 'karma',
-        'title': 'Karma',
-        'url': 'http://karma-runner.github.io/',
-        'description': 'Spectacular Test Runner for JavaScript.',
-        'logo': 'karma.png'
-      },
-      {
-        'key': 'protractor',
-        'title': 'Protractor',
-        'url': 'https://github.com/angular/protractor',
-        'description': 'End to end test framework for AngularJS applications built on top of WebDriverJS.',
-        'logo': 'protractor.png'
-      },
-      {
-        'key': 'jquery',
-        'title': 'jQuery',
-        'url': 'http://jquery.com/',
-        'description': 'jQuery is a fast, small, and feature-rich JavaScript library.',
-        'logo': 'jquery.jpg'
-      },
-      {
-        'key': 'bootstrap',
-        'title': 'Bootstrap',
-        'url': 'http://getbootstrap.com/',
-        'description': 'Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.',
-        'logo': 'bootstrap.png'
-      },
-      {
-        'key': 'node-sass',
-        'title': 'Sass (Node)',
-        'url': 'https://github.com/sass/node-sass',
-        'description': 'Node.js binding to libsass, the C version of the popular stylesheet preprocessor, Sass.',
-        'logo': 'node-sass.png'
+  .controller('MainCtrl', function($scope, $filter, ngTableParams) {
+    var self = this;
+    self.newTodoTitle = "";
+    self.todos = [];
+    self.addTodo = function(todo) {
+      self.newTodoTitle = "";
+      todo.dueDate = new Date();
+      self.todos.push(todo);
+    };
+    self.removeTodo = function(title) {
+      self.todos = self.todos.filter(function (item) {
+        return item.title !== title;
+      });
+    };
+    self.getCompletedStyle = function(completed) {
+      return completed ? "text-success" : "text-danger";
+    }
+
+    self.tableParams = new ngTableParams({
+      sorting: {dueDate : 'desc'}
+    }, {
+      total: self.todos.length, // length of data
+      getData: function($defer, params) {
+        var orderedData = params.sorting() ? $filter('orderBy')(self.todos, params.orderBy()) : self.todos;
+        $defer.resolve(orderedData);
       }
-    ];
-    angular.forEach(this.awesomeThings, function(awesomeThing) {
-      awesomeThing.rank = Math.random();
     });
+
+    $scope.$watch(function() { return self.todos; },
+      function(newVal, oldVal){
+        console.log("new value: " + newVal + ", old value: " + oldVal);
+        console.log("TODOs: " + self.todos);
+        self.tableParams.reload();
+      }, true);
+
+    $scope.$watch(function() { return self.newTodoTitle; },
+      function(newVal, oldVal){
+        console.log("new value: " + newVal + ", old value: " + oldVal);
+        console.log("New todo: " + self.newTodoTitle);
+      });
   });

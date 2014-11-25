@@ -1,23 +1,33 @@
 'use strict';
 
 describe('controllers', function(){
-  var scope;
 
   beforeEach(module('angularjsTutorial'));
 
-  beforeEach(inject(function($rootScope) {
-  	scope = $rootScope.$new();
+  it('Should have an array of todos', inject(function($controller) {
+    var main = $controller('MainCtrl', {});
+      expect(main.todos).toBeDefined();
   }));
 
-  it('should define more than 5 awesome things', inject(function($controller) {
-    var ctrl = {};
-      expect(ctrl.awesomeThings).toBeUndefined();
-
-    ctrl = $controller('MainCtrl', {
-      //$scope: scope
-    });
-
-    expect(angular.isArray(ctrl.awesomeThings)).toBeTruthy();
-    expect(ctrl.awesomeThings.length > 5).toBeTruthy();
+  it('Should have added a todo in todos', inject(function($controller) {
+    var main = $controller('MainCtrl', {});
+    var due = moment().subtract(1, 'days');
+    console.log("Due date: " + due);
+    main.addTodo({title: "1", desc: "one item", completed: true, dueDate: due});
+    expect(main.todos.length).toBe(1);
   }));
+
+  it('Should remove an item', inject(function($controller) {
+    var main = $controller('MainCtrl', {});
+    var due = moment().subtract(1, 'days').calendar();
+    main.addTodo({title: "1", desc: "one item", completed: true, dueDate: due});
+    main.removeTodo("1");
+    expect(main.todos.length).toBe(0);
+  }));
+
+  it('Should have the specified properties', inject(function($controller) {
+    var main = $controller('MainCtrl', {});
+
+  }));
+
 });
