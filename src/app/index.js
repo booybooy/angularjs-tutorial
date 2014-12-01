@@ -1,6 +1,7 @@
 'use strict';
 
-var app = angular.module('angularjsTutorial', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ngTable'])
+var app = angular.module('angularjsTutorial', ['ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router',
+  'ngTable', 'effects'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -13,6 +14,36 @@ var app = angular.module('angularjsTutorial', ['ngAnimate', 'ngCookies', 'ngTouc
     $urlRouterProvider.otherwise('/');
   });
 
-app.controller('GlobalController', function($scope) {
-  this.message = "I am GloballController";
+angular.module('effects', ['ngAnimate'])
+  .animation('.slide-up', function() {
+    return {
+      enter: function(element, done) {
+        console.log("In enter!!!!!!");
+        $(element)
+          .hide()
+          .slideDown(400, done);
+
+        return function(cancel) {
+          if(cancel) {
+            element.stop();
+          }
+        };
+      },
+      leave: function(element, done) {
+        $(element)
+          .children('td')
+          .animate({
+            padding: 0
+          })
+          .wrapInner('<div />')
+          .children()
+          .slideUp(done);
+
+        return function(cancel) {
+          if(cancel) {
+            element.stop();
+          }
+        };
+      }
+    };
 });

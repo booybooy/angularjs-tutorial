@@ -8,47 +8,9 @@
     [500, 200]
   ];
 
-  d3.select("#chartdiv").append("p").text("New paragraph!");
-  d3.select("#chartdiv").selectAll("p")
-    .data(dataset)
-    .enter()
-    .append("p")
-    .text(function(d) { return d; })
-    .style("color", function(d) {
-      if (d > 78) {
-        return "red";
-      }
-      return "blue";
-    });
-  d3.select('#chartdiv').selectAll("div")
-    .data(dataset)
-    .enter()
-    .append("div")
-    .classed("bar", true)
-    .style("height", function(d) {
-      return d * 2 +"px";
-    })
-    .style("margin-right", "2px");
-
   var h = 200;
   var w = 800;
   var svg = d3.select("#chartdiv").append("svg").attr("width", w).attr("height", h);
-
-  // circles
-
-//  var circles = svg.selectAll("circle")
-//    .data(dataset)
-//    .enter()
-//    .append("circle");
-//
-//  circles.attr("cx", 400)
-//    .attr("cy", 300)
-//    .attr("r", function(d) {
-//      return d;
-//    })
-//    .attr("fill", function(d, i) {
-//      return i % 2 == 0 ? "black" : "white";
-//    });
 
     // rects
   var rects = svg.selectAll("rect")
@@ -135,7 +97,7 @@
 
   <div class="row topmargin">
     <table ng-table="mainCtrl.tableParams" class="todo table table-condensed table-striped table-bordered">
-      <tr ng-repeat="todo in $data" class="todo-item fade-height-animation" ng-class="{'completed' : todo.completed}">
+      <tr ng-repeat="todo in $data" class="todo-item slide-up" ng-class="{'completed' : todo.completed}">
         <td><input class="input-checkbox" type="checkbox" ng-model="todo.completed" /></td>
         <td data-title="'Title'">{{todo.title}}</td>
         <td data-title="'Due On'" sortable="'dueDate'">{{todo.dueDate | date: 'medium'}}</td>
@@ -150,9 +112,7 @@
   </div>
   <hr>
 
-  <div id="chartdiv">
-    <div class="bar"></div>
-  </div>
+  <div id="chartdiv"></div>
 
   <div class="footer">
     <p>With ♥ from <a href="https://twitter.com/Swiip">@Swiip</a></p>

@@ -16,7 +16,7 @@ angular.module('angularjsTutorial')
     };
     self.getCompletedStyle = function(completed) {
       return completed ? "text-success" : "text-danger";
-    }
+    };
 
     self.tableParams = new ngTableParams({
       sorting: {dueDate : 'desc'}
