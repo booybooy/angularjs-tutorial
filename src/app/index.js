@@ -7,9 +7,15 @@ var app = angular.module('angularjsTutorial', ['ngCookies', 'ngTouch', 'ngSaniti
       .state('home', {
         url: '/',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'mainCtrl'
-      });
+        controller: 'MainCtrl as mainCtrl'
+      })
+      .state('contact', {
+        url: '/contact',
+        templateUrl: 'app/contact/contact.html',
+        controller: 'ContactCtrl as contactCtrl'
+      })
+
+    ;
 
     $urlRouterProvider.otherwise('/');
   });

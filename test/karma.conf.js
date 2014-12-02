@@ -13,7 +13,11 @@ module.exports = function(config) {
       //'bower_components/angular-cookies/angular-cookies.js',
         'bower_components/angular-*/angular*.js',
         'bower_components/moment/moment.js',
-        'src/**/*.js',
+        'bower_components/ng-table/ng-table.js',
+        'src/app/index.js',
+        'src/app/main/main.controller.js',
+
+        'src/components/**/*.js',
         'test/unit/**/*.js'
     ],
 
