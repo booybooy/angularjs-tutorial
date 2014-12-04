@@ -1,32 +1,53 @@
 'use strict';
 
-describe('controllers', function(){
+describe('controllers', function () {
+  var scope, q;
 
   beforeEach(module('angularjsTutorial'));
 
-  it('Should have an array of todos', inject(function($controller) {
-    var main = $controller('MainCtrl', {});
-      expect(main.todos).toBeDefined();
+  beforeEach(inject(function ($rootScope, $q) {
+    scope = $rootScope.$new();
+    q = $q;
   }));
 
-  it('Should have added a todo in todos', inject(function($controller) {
-    var main = $controller('MainCtrl', {});
-    var due = moment().subtract(1, 'days');
-    console.log("Due date: " + due);
-    main.addTodo({title: "1", desc: "one item", completed: true, dueDate: due});
-    expect(main.todos.length).toBe(1);
+  it('Should have an array of todos', inject(function ($controller) {
+    var main = $controller('MainCtrl', {$scope: scope, $q: q});
+    expect(main.todos).toBeDefined();
   }));
 
-  it('Should remove an item', inject(function($controller) {
-    var main = $controller('MainCtrl', {});
-    var due = moment().subtract(1, 'days').calendar();
-    main.addTodo({title: "1", desc: "one item", completed: true, dueDate: due});
-    main.removeTodo("1");
-    expect(main.todos.length).toBe(0);
+  it('should be able to add a todo and return the newly created todo', inject(function($controller) {
+    var mainCtrl = $controller('MainCtrl', {
+      $scope : scope
+    });
+
+    var newTodo = mainCtrl.addTodo({
+      title : 'test title'
+    });
+
+    expect(mainCtrl.todos.length === 1).toBeTruthy();
+    expect(newTodo).toBeDefined();
   }));
 
-  it('Should have the specified properties', inject(function($controller) {
-    var main = $controller('MainCtrl', {});
+  it('should be able to remove a todo by id', inject(function($controller) {
+    var mainCtrl = $controller('MainCtrl', {
+      $scope : scope
+    });
+
+    var title = 'test title';
+
+    var newTodo = mainCtrl.addTodo({
+      title : title
+    });
+
+    expect(mainCtrl.todos.length === 1).toBeTruthy();
+
+    mainCtrl.removeTodo(newTodo);
+
+    expect(mainCtrl.getTodos().length === 0).toBeTruthy();
+  }));
+
+  it('Should have the specified properties', inject(function ($controller) {
+    var main = $controller('MainCtrl', {$scope: scope, $q: q});
 
   }));
 

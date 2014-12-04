@@ -96,7 +96,7 @@
 
   <div class="row topmargin">
     <table ng-table="mainCtrl.tableParams" class="todo table table-condensed table-striped table-bordered">
-      <tr ng-repeat="todo in $data" class="todo-item slide-up" ng-class="{'completed' : todo.completed}">
+      <tr ng-repeat="todo in $data track by todo.id" class="todo-item slide-up" ng-class="{'completed' : todo.completed}">
         <td><input class="input-checkbox" type="checkbox" ng-model="todo.completed" /></td>
         <td data-title="'Title'">{{todo.title}}</td>
         <td data-title="'Due On'" sortable="'dueDate'">{{todo.dueDate | date: 'medium'}}</td>
