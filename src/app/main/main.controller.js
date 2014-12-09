@@ -9,50 +9,35 @@ angular.module('angularjsTutorial')
         self.newTodoTitle = "";
         self.todos = [];
 
-        self.getTodos = function () {
-          return TodoService.getTodos().then(function (todos) {
+        self.getTodos = function(){
+          return TodoService.getTodos().then(function(todos){
             self.todos = todos;
+            return self.todos;
           });
         };
 
-        self.addTodo = function (options) {
-          var deferred = $q.defer(),
-              newTodo;
-
-          TodoService.addTodo(options)
-              .then(
-              function (newTodoResult) {
-                newTodo = newTodoResult;
-              },
-              function (err) {
-                console.log(err);
-              }
-          )
-              .then(self.getTodos)
-              .then(
-              function (todos) {
-                self.newTodoTitle = '';
-                deferred.resolve(newTodo);
-              }
-          )
-              .catch(
-              function (err) {
-                console.log(err);
-                deferred.reject(err);
-              }
-          );
-
-          return deferred.promise;
+        self.addTodo = function(options){
+          var newTodo;
+          return TodoService.addTodo(options).then(function(newTodoResult){
+            newTodo = newTodoResult;
+          }, function(err){
+            console.log(err);
+          });
         };
 
-        self.removeTodo = function (todo) {
-          return TodoService.removeTodoById(todo.id)
-              .then(self.getTodos);
+        self.removeTodo = function(todo){
+          return TodoService.removeTodo(todo);
+        };
+
+        self.saveTodo = function(todo){
+          return TodoService.saveTodo(todo);
         };
 
         self.getCompletedStyle = function (completed) {
           return completed ? "text-success" : "text-danger";
         };
+
+        self.getTodos();
 
         self.tableParams = new ngTableParams({
           sorting: {dueDate: 'desc'}

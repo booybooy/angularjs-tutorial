@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('angularjsTutorial', ['ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router',
-  'ngTable', 'effects'])
+  'ngTable', 'effects', 'firebase'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
